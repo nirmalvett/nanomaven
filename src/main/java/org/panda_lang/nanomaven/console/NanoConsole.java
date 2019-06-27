@@ -17,12 +17,21 @@
 package org.panda_lang.nanomaven.console;
 
 import org.panda_lang.nanomaven.NanoMaven;
+import org.panda_lang.nanomaven.NanoMavenConstants;
 import org.panda_lang.nanomaven.console.commands.*;
 
 public class NanoConsole {
 
     private final NanoMaven nanoMaven;
     private final NanoConsoleThread consoleThread;
+    private final String[] knownCommands = new String[] {
+    	"reinstall-artifacts (rs) - Reinstall all artifacts",
+    	"users - List all registered users",
+    	"projects - List all added projects",
+    	"add-user <username> <password> - Add user",
+    	"add-project <repository>.<groupId>/<artifactId> - Add project extra data",
+    	"add-member <repository>.<groupId>/<artifactId> <username> - Add user to the specified project"
+    };
 
     public NanoConsole(NanoMaven nanoMaven) {
         this.nanoMaven = nanoMaven;
@@ -69,24 +78,40 @@ public class NanoConsole {
         command = elements[0];
 
         if (command.equalsIgnoreCase("add-user")) {
+        	if(elements.length < 3) {
+        		NanoMaven.getLogger().warn("Incorrect usage: " + knownCommands[3]);
+        		return;
+        	}
             AddUserCommand addUserCommand = new AddUserCommand(elements[1], elements[2]);
             addUserCommand.call(nanoMaven);
             return;
         }
 
         if (command.equalsIgnoreCase("add-project")) {
+        	if(elements.length < 2) {
+        		NanoMaven.getLogger().warn("Incorrect usage: " + knownCommands[4]);
+        		return;
+        	}
             AddProjectCommand addProjectCommand = new AddProjectCommand(elements[1]);
             addProjectCommand.call(nanoMaven);
             return;
         }
 
         if (command.equalsIgnoreCase("add-member")) {
+        	if(elements.length < 3) {
+        		NanoMaven.getLogger().warn("Incorrect usage: " + knownCommands[5]);
+        		return;
+        	}
             AddMemberCommand addMemberCommand = new AddMemberCommand(elements[1], elements[2]);
             addMemberCommand.call(nanoMaven);
             return;
         }
 
         NanoMaven.getLogger().warn("Unknown command " + elements[0]);
+        NanoMaven.getLogger().warn("NanoMaven " + NanoMavenConstants.VERSION + " Commands:");
+        for(String cmd : knownCommands) {
+        	NanoMaven.getLogger().warn("\t" + cmd);
+        }
     }
 
 }
