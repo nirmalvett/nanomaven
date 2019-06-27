@@ -82,7 +82,7 @@ public class NanoRepositoryRouterPut implements NanoRouter {
                 return result(session, Status.UNAUTHORIZED, "Invalid authorization credentials");
             }
 
-            boolean authorized = NanoUserDatabase.B_CRYPT_PASSWORD_ENCODER.matches(password, user.getEncryptedPassword());
+            boolean authorized = NanoUserDatabase.B_CRYPT_PASSWORD_ENCODER.matches(password, user.getHashedPassword());
 
             if (!authorized) {
                 return result(session, Status.UNAUTHORIZED, "Invalid authorization credentials");

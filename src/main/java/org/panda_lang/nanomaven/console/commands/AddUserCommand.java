@@ -47,8 +47,8 @@ public class AddUserCommand implements NanoCommand {
         NanoUser user = new NanoUser(username);
         usersManager.addUser(user);
 
-        String encodedPassword = NanoUserDatabase.B_CRYPT_PASSWORD_ENCODER.encode(password);
-        user.setEncryptedPassword(encodedPassword);
+        String hashedPassword = NanoUserDatabase.B_CRYPT_PASSWORD_ENCODER.encode(password);
+        user.setHashedPassword(hashedPassword);
 
         usersManager.save();
         NanoMaven.getLogger().info("User " + username + " has been created");

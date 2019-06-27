@@ -22,7 +22,7 @@ import java.util.Collection;
 public class NanoUser {
 
     private final String username;
-    private String encryptedPassword;
+    private String hashedPassword;
     private Collection<NanoProject> projects;
     private boolean administrator;
 
@@ -35,8 +35,8 @@ public class NanoUser {
         this.projects.add(project);
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public void enableAdministrator() {
@@ -51,8 +51,8 @@ public class NanoUser {
         return projects;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
     public String getUsername() {

@@ -44,7 +44,7 @@ public class NanoUserDatabase {
             String password = entry.getValue().toString();
 
             NanoUser user = new NanoUser(username);
-            user.setEncryptedPassword(password);
+            user.setHashedPassword(password);
 
             usersManager.addUser(user);
         }
@@ -56,7 +56,7 @@ public class NanoUserDatabase {
         PandaConfiguration configuration = new PandaConfiguration();
 
         for (NanoUser user : usersManager.getUsers()) {
-            configuration.set(user.getUsername(), user.getEncryptedPassword());
+            configuration.set(user.getUsername(), user.getHashedPassword());
         }
 
         configuration.save(USERS_FILE);
