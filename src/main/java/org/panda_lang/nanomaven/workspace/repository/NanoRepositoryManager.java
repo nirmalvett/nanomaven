@@ -22,6 +22,7 @@ import org.panda_lang.nanomaven.workspace.configuration.NanoMavenConfiguration;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NanoRepositoryManager {
@@ -38,22 +39,25 @@ public class NanoRepositoryManager {
 
         NanoMaven.getLogger().info("Scanning to find repositories...");
 
-        for (String repositoryName : configuration.getRepositories()) {
-            File repositoryDirectory = new File(rootDirectory, repositoryName);
-
-            if (!repositoryDirectory.exists()) {
-                NanoMaven.getLogger().warn("Nothing has been found!");
-                return;
-            }
-
-            if (!repositoryDirectory.isDirectory()) {
-                NanoMaven.getLogger().info("  Skipping " + repositoryDirectory.getName());
-            }
-
-            NanoRepository repository = new NanoRepository(repositoryName);
-            NanoMaven.getLogger().info("  + " + repositoryDirectory.getName());
-
-            repositories.put(repository.getRepositoryName(), repository);
+        List<? extends String> configRepositories = configuration.getRepositories();
+        if(configRepositories != null) {
+	        for (String repositoryName : configRepositories) {
+	            File repositoryDirectory = new File(rootDirectory, repositoryName);
+	
+	            if (!repositoryDirectory.exists()) {
+	                NanoMaven.getLogger().warn("Nothing has been found!");
+	                return;
+	            }
+	
+	            if (!repositoryDirectory.isDirectory()) {
+	                NanoMaven.getLogger().info("  Skipping " + repositoryDirectory.getName());
+	            }
+	
+	            NanoRepository repository = new NanoRepository(repositoryName);
+	            NanoMaven.getLogger().info("  + " + repositoryDirectory.getName());
+	
+	            repositories.put(repository.getRepositoryName(), repository);
+	        }
         }
 
         NanoMaven.getLogger().info("Result: " + repositories.size() + " repositories have been found");
