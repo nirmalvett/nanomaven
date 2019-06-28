@@ -162,6 +162,14 @@ public class NanoMavenConfiguration {
 
     public static NanoMavenConfiguration load() {
     	File configFile = new File(FILENAME);
+    	if(!configFile.exists()) {
+    		try(FileOutputStream writeStream = new FileOutputStream(configFile); InputStream readStream = NanoMavenConfiguration.class.getClassLoader().getResourceAsStream(FILENAME)) {
+    			IOUtils.copy(readStream, writeStream);
+    		} catch(Exception ex) {
+    			throw new RuntimeException("Could not save default configuration", ex);
+    		}
+    	}
+
         Representer representer = new Representer();
         representer.getPropertyUtils().setSkipMissingProperties(true);
         Yaml yaml = new Yaml(representer);
