@@ -43,8 +43,7 @@ public class NanoMaven {
     private long uptime;
 
     private void initialize() {
-        this.configuration = new NanoMavenConfiguration();
-        configuration.load();
+        this.configuration = NanoMavenConfiguration.load();
 
         this.console = new NanoConsole(this);
         console.hook();

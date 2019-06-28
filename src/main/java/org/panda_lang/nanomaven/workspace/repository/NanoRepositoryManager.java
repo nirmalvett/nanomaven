@@ -58,6 +58,8 @@ public class NanoRepositoryManager {
 	
 	            repositories.put(repository.getRepositoryName(), repository);
 	        }
+        } else {
+        	NanoMaven.getLogger().warn("\'repositories\' section was not configured properly.");
         }
 
         NanoMaven.getLogger().info("Result: " + repositories.size() + " repositories have been found");
