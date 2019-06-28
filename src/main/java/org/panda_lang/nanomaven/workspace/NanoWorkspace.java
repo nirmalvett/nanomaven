@@ -26,7 +26,7 @@ public class NanoWorkspace {
         DefaultWorkspace defaultWorkspace = new DefaultWorkspace();
 
         // NanoMaven Configuration
-        if (!FileUtils.fileExists("nanomaven.pc")) {
+        if (!FileUtils.fileExists("nanomaven.yml")) {
             defaultWorkspace.generateConfiguration();
             NanoMaven.getLogger().info("NanoMaven configuration file has been generated");
         }
